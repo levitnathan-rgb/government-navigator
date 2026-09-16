@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Government Navigator interactive concept demo">
+<title>Harbor Market Benefits | Government Navigator</title>
+<style>
+:root{
+  --hm:#17594d;--hm2:#0f463d;--gn:#245fcb;--gn2:#17479d;--ink:#13202d;--muted:#657485;
+  --bg:#f4f7f9;--card:#fff;--line:#dfe6ec;--soft:#eef4f9;--green:#117a55;--green-soft:#e9f7f1;
+  --amber:#9a6410;--amber-soft:#fff5df;--red:#a43c3c;--red-soft:#fff0f0;--shadow:0 12px 36px rgba(20,43,64,.08)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.companybar{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50}
+.company{display:flex;align-items:center;gap:13px}.hmlogo{width:40px;height:40px;border-radius:10px;background:linear-gradient(145deg,var(--hm),var(--hm2));display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:-.04em}
+.companyname{font-weight:850;font-size:15px}.companysub{font-size:11px;color:var(--muted);margin-top:2px}.toplinks{display:flex;gap:24px;align-items:center;font-size:13px;font-weight:750;color:#687787}.toplinks .active{color:var(--hm)}
+.avatar{width:34px;height:34px;border-radius:50%;background:#edf3f0;color:var(--hm);display:grid;place-items:center;font-weight:850;font-size:12px}
+.shell{display:grid;grid-template-columns:224px minmax(0,1fr);max-width:1440px;margin:0 auto;min-height:calc(100vh - 72px)}
+aside{background:#fbfcfd;border-right:1px solid var(--line);padding:24px 16px;position:relative}.asidehead{font-size:10px;color:#8b97a3;text-transform:uppercase;letter-spacing:.12em;font-weight:900;margin:6px 12px 12px}.nav{padding:11px 12px;border-radius:9px;color:#566575;font-size:13px;font-weight:720;margin:3px 0}.nav.active{background:#e8f3ef;color:var(--hm)}
+.powered{position:sticky;top:calc(100vh - 160px);margin:24px 10px 0;border-top:1px solid var(--line);padding-top:18px;color:#8a96a2;font-size:10px;line-height:1.4}.powered b{display:block;color:#36495a;font-size:12px;margin-bottom:4px}
+main{padding:34px 38px 80px;max-width:1120px;width:100%}.mainbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}.crumb{font-size:11px;color:#7b8997;font-weight:700}.viewtoggle{display:flex;background:#e8edf2;border-radius:10px;padding:3px;gap:3px}.viewtoggle button{border:0;background:transparent;border-radius:8px;padding:8px 11px;font-size:11px;font-weight:850;color:#627180}.viewtoggle button.active{background:white;box-shadow:0 2px 8px rgba(0,0,0,.08);color:var(--ink)}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:900;color:#778898}.page-title{font-size:40px;line-height:1.04;letter-spacing:-.045em;margin:8px 0 10px}.lede{font-size:16px;color:var(--muted);line-height:1.55;max-width:780px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 4px 18px rgba(20,40,60,.035);margin-top:16px}.hero{background:linear-gradient(130deg,#133450 0%,#1b5687 62%,#276caf 100%);border:0;color:#fff;padding:32px;box-shadow:var(--shadow)}.hero .eyebrow{color:#b9d3ea}.hero .lede{color:#dce9f4}.hero-money{font-size:52px;line-height:1;font-weight:950;letter-spacing:-.055em;margin:10px 0 8px}.hero-caption{font-size:13px;color:#d9e8f5;line-height:1.5;max-width:760px}
+.btn{border:0;border-radius:11px;padding:12px 16px;font-weight:850;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn.primary{background:var(--gn);color:white}.btn.primary:hover{background:var(--gn2)}.btn.green{background:var(--green);color:white}.btn.light{background:#eef2f6;color:#203348}.btn.white{background:#fff;color:#173f67}.btn.outline{background:#fff;border:1px solid var(--line);color:#31485c}.btn.big{padding:15px 19px;font-size:15px}.btn:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.split{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.label{font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;color:#7c8996}.metric{font-size:30px;font-weight:950;letter-spacing:-.035em;margin-top:5px}.small{font-size:12px;color:var(--muted);line-height:1.5}.tiny{font-size:10px;color:#8795a2;line-height:1.45}.divider{height:1px;background:var(--line);margin:20px 0}
+.program-table{width:100%;border-collapse:collapse;margin-top:18px}.program-table th{text-align:left;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#8a97a4;padding:0 12px 9px}.program-table td{padding:13px 12px;border-top:1px solid rgba(255,255,255,.16);font-size:12px;vertical-align:middle}.program-table .money-cell{font-weight:900;font-size:14px;white-space:nowrap}.hero .program-table th{color:#bcd1e4}.hero .program-table td{border-color:#ffffff20}.status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.06em;font-weight:900}.status.good{background:var(--green-soft);color:var(--green)}.status.possible{background:var(--amber-soft);color:var(--amber)}.status.info{background:#edf3ff;color:#2f63ad}.status.neutral{background:#eef2f5;color:#627180}.hero .status.good{background:#dff8ed;color:#0c6748}.hero .status.possible{background:#fff0c9;color:#7a4c00}.hero .status.info{background:#dfebff;color:#1d4f98}
+.prefill{border:1px solid var(--line);border-radius:13px;padding:14px}.prefill .source{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--green);font-weight:900}.prefill b{display:block;margin-top:7px;font-size:14px}.prefill .v{font-size:12px;color:#586879;margin-top:2px}.notice{border:1px solid #d7e8f8;background:#eef6fd;color:#315978;padding:14px 15px;border-radius:12px;font-size:12px;line-height:1.55}.privacy{display:flex;gap:10px;align-items:flex-start}.shield{width:25px;height:25px;border-radius:50%;background:#d9ecfb;display:grid;place-items:center;flex:0 0 auto;color:#2c5a80;font-weight:900}
+.sectionhead{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-bottom:10px}.sectionhead h2{margin:3px 0 0;font-size:24px;letter-spacing:-.025em}.progressbox{min-width:180px}.progressmeta{display:flex;justify-content:space-between;font-size:10px;font-weight:850;color:#6e7d8c;margin-bottom:6px}.progress{height:7px;border-radius:99px;background:#e9eef2;overflow:hidden}.progress span{display:block;height:100%;background:var(--gn);transition:width .35s ease}
+.question-card{padding:30px}.qprompt{font-size:29px;font-weight:920;letter-spacing:-.035em;line-height:1.15;max-width:760px}.qsub{color:var(--muted);font-size:13px;line-height:1.5;margin-top:8px}.choicegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:22px}.choice{border:1px solid var(--line);background:white;border-radius:12px;text-align:left;padding:15px;font-size:13px;font-weight:800;color:#314457}.choice:hover,.choice.selected{border-color:#7aa5d9;background:#f2f7ff}.inputrow{display:flex;gap:10px;margin-top:20px}.biginput{width:100%;border:1px solid #cfd9e2;border-radius:12px;padding:15px;font-size:17px;font-weight:750;outline:none}.biginput:focus{border-color:#72a0d6;box-shadow:0 0 0 3px #e5f0ff}
+.live-estimate{border-radius:15px;background:#f5f8fb;border:1px solid var(--line);padding:18px}.live-estimate .num{font-size:27px;font-weight:950;letter-spacing:-.035em;margin-top:5px}.delta{font-size:11px;font-weight:850;color:var(--green);margin-top:4px;min-height:15px}
+.channelbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:17px}.channel{border:1px solid var(--line);background:#fff;border-radius:13px;padding:14px;text-align:left;min-height:105px}.channel:hover{border-color:#79a4d0;box-shadow:0 7px 20px rgba(24,57,90,.08)}.channel .icon{width:28px;height:28px;border-radius:9px;background:#eff4fa;display:grid;place-items:center;font-size:14px}.channel b{display:block;font-size:12px;margin:9px 0 4px}.channel span{font-size:10px;color:var(--muted);line-height:1.4}
+.phone-shell{max-width:420px;margin:16px auto 0;border:8px solid #14202a;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 18px 48px rgba(18,32,45,.16)}.phone-top{padding:12px 14px;background:#f5f7f9;text-align:center;border-bottom:1px solid #e5e9ed}.phone-top b{font-size:12px}.phone-top span{display:block;font-size:9px;color:#798794;margin-top:2px}.messages{padding:16px;background:#fff;min-height:330px}.bubble{max-width:82%;padding:10px 12px;border-radius:16px;background:#e9edf1;margin:9px 0;font-size:12px;line-height:1.45}.bubble.me{background:#2b77d0;color:#fff;margin-left:auto}.typing{font-size:10px;color:#8a96a2;padding:0 17px 12px}.sms-actions{display:flex;gap:8px;padding:0 14px 14px}.sms-actions input{flex:1;border:1px solid #d9e0e7;border-radius:999px;padding:10px 13px;font-size:12px}.sms-actions button{width:36px;border:0;border-radius:50%;background:var(--gn);color:white;font-weight:900}
+.voice{background:#102537;color:#fff;border-radius:17px;padding:22px;margin-top:16px}.wave{display:flex;justify-content:center;gap:5px;height:32px;align-items:center;margin:16px 0}.wave i{display:block;width:4px;border-radius:4px;background:#7cb4e9}.wave i:nth-child(1){height:10px}.wave i:nth-child(2){height:22px}.wave i:nth-child(3){height:30px}.wave i:nth-child(4){height:18px}.wave i:nth-child(5){height:26px}.voicequote{font-size:14px;line-height:1.55;color:#e8f3fb}.voicehint{font-size:10px;color:#9fb9cd;margin-top:8px}
+.results-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.program{border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff}.program h3{font-size:14px;margin:10px 0 4px}.program .amount{font-weight:900;font-size:17px;margin-top:9px}.checkline{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;color:#607180}.checkline input{accent-color:var(--gn)}
+.overlay{position:fixed;inset:0;background:rgba(10,22,33,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.overlay.show{display:flex}.modal{width:min(640px,96vw);background:white;border-radius:20px;padding:28px;box-shadow:0 30px 90px rgba(0,0,0,.25)}.modal h2{font-size:26px;margin:6px 0 8px}.processing{margin-top:20px}.proc{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:12px}.proc:first-child{border:0}.proc-dot{width:22px;height:22px;border-radius:50%;background:#eef2f5;color:#7a8793;display:grid;place-items:center;font-size:11px;font-weight:900}.proc.done .proc-dot{background:var(--green-soft);color:var(--green)}
+.outcome-banner{background:linear-gradient(120deg,#e9f7f1,#f7fbf9);border:1px solid #cfe9de;border-radius:15px;padding:20px;margin-top:16px}.outcome-banner h2{margin:5px 0 8px}.outcomes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.outcome{background:white;border:1px solid #dce9e3;border-radius:12px;padding:13px}.outcome strong{font-size:24px;display:block}.app-row{display:grid;grid-template-columns:1.2fr .8fr auto;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line)}.app-row:first-child{border-top:0}.app-row h3{margin:0 0 3px;font-size:13px}.app-row .state{font-size:11px;color:#61717f}
+.escalate{border:1px solid #f0d9d9;background:#fff8f8;border-radius:14px;padding:18px;margin-top:16px}.escalate h3{margin:0 0 6px;font-size:14px}.escalate .quote{font-size:13px;font-style:italic;color:#5f6e7b;margin:10px 0}.navigator{display:grid;grid-template-columns:.9fr 1.1fr;gap:14px;margin-top:15px}.navcase{border:1px solid var(--line);border-radius:14px;padding:16px}.navcase h3{margin:4px 0 12px;font-size:15px}.case-row{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding:10px 0;font-size:11px}.case-row:first-of-type{border:0}.case-row span{color:#758391}.case-row b{text-align:right}
+.employer-hero{background:#102f3c;color:#fff;border:0}.employer-hero .eyebrow{color:#a7c4cc}.employer-hero .lede{color:#d4e3e7}.roi{font-size:48px;font-weight:950;letter-spacing:-.05em}.privacy-lock{background:#173f4c;border:1px solid #285260;border-radius:14px;padding:17px;color:#e5f0f2}.privacy-lock b{display:block;margin-bottom:5px}.privacy-lock span{font-size:11px;color:#bfd2d7;line-height:1.5}.impactbar{height:12px;border-radius:99px;background:#eef1f3;overflow:hidden;margin-top:10px}.impactbar span{height:100%;display:block;background:#7897ad}.impactrow{display:grid;grid-template-columns:160px 1fr 90px;align-items:center;gap:12px;margin:12px 0;font-size:11px}.impactrow b{text-align:right}
+.demo-note{font-size:10px;color:#8d99a4;line-height:1.5;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}.hidden{display:none!important}.fade{animation:fade .25s ease}@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.toast{position:fixed;right:20px;bottom:20px;background:#122737;color:#fff;padding:12px 15px;border-radius:11px;font-size:12px;font-weight:750;display:none;z-index:150;box-shadow:0 12px 30px rgba(0,0,0,.2)}.toast.show{display:block}
+@media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none}main{padding:24px 16px 70px}.toplinks{display:none}.companybar{padding:0 16px}.page-title{font-size:34px}.hero-money{font-size:42px}.grid2,.grid3,.grid4,.split,.results-grid,.navigator,.outcomes{grid-template-columns:1fr}.channelbar{grid-template-columns:repeat(2,1fr)}.choicegrid{grid-template-columns:1fr}.app-row{grid-template-columns:1fr}.impactrow{grid-template-columns:115px 1fr 70px}}
+</style>
+</head>
+<body>
+<header class="companybar">
+  <div class="company"><div class="hmlogo">HM</div><div><div class="companyname">Harbor Market</div><div class="companysub">Employee Benefits Center</div></div></div>
+  <div class="toplinks"><span>Home</span><span class="active">Benefits</span><span>Pay & Time</span><span>Wellbeing</span><span>Profile</span><div class="avatar">MS</div></div>
+</header>
+<div class="shell">
+  <aside>
+    <div class="asidehead">My benefits</div>
+    <div class="nav">Medical & dental</div><div class="nav">401(k)</div><div class="nav">Life & disability</div><div class="nav">Employee assistance</div><div class="nav active">Government benefits</div><div class="nav">Benefits contacts</div>
+    <div class="powered"><b>Government Navigator</b>Included with Harbor Market benefits. No employee charge.</div>
+  </aside>
+  <main>
+    <div class="mainbar">
+      <div class="crumb">Harbor Market / Benefits / Government benefits</div>
+      <div class="viewtoggle"><button id="employeeToggle" class="active" onclick="setView('employee')">Employee view</button><button id="employerToggle" onclick="setView('employer')">Employer view</button></div>
+    </div>
+
+    <section id="employeeView">
+      <section id="welcomeScreen" class="fade">
+        <div class="eyebrow">New Harbor Market benefit</div>
+        <h1 class="page-title">Maria, you may be missing<br><span style="color:var(--gn)">$8,000–$10,000 a year.</span></h1>
+        <div class="lede">Harbor Market already shared the basic employment and benefits information you authorized. Government Navigator used it to start checking federal, Hawaii, and local programs — before asking you to fill out another form.</div>
+
+        <div class="card hero">
+          <div class="eyebrow">Preliminary household opportunity</div>
+          <div class="hero-money" id="welcomeEstimate">$8,000–$10,000</div>
+          <div class="hero-caption">A ballpark screening range based on what is already known. It is not an eligibility determination, and exact benefits depend on household details and official agency decisions.</div>
+          <table class="program-table">
+            <thead><tr><th>We are already checking</th><th>Ballpark value</th><th>What we know</th></tr></thead>
+            <tbody>
+              <tr><td><b>Child Care Connection Hawaii</b></td><td class="money-cell">$3,000–$5,000/yr</td><td><span class="status good">Strong potential match</span></td></tr>
+              <tr><td><b>Earned Income Tax Credit</b></td><td class="money-cell">~$2,400</td><td><span class="status good">Strong potential match</span></td></tr>
+              <tr><td><b>Child Tax Credit</b></td><td class="money-cell">~$2,000</td><td><span class="status possible">Potential match</span></td></tr>
+              <tr><td><b>SNAP food assistance</b></td><td class="money-cell">$1,200–$2,400/yr</td><td><span class="status info">Need 2 answers</span></td></tr>
+              <tr><td><b>Medicaid / CHIP</b></td><td class="money-cell">Coverage varies</td><td><span class="status info">Checking</span></td></tr>
+              <tr><td><b>LIHEAP energy assistance</b></td><td class="money-cell">$500–$1,000</td><td><span class="status info">Need 1 answer</span></td></tr>
+              <tr><td><b>School meals + Hawaii programs</b></td><td class="money-cell">Varies</td><td><span class="status info">Checking</span></td></tr>
+            </tbody>
+          </table>
+          <div class="actions"><button class="btn white big" onclick="showScreen('prefillScreen')">Get my benefits →</button></div>
+        </div>
+        <div class="tiny" style="margin-top:10px">Government Navigator screens broadly, but this prototype shows only a representative set of programs. All names, values, and results are fictional.</div>
+      </section>
+
+      <section id="prefillScreen" class="hidden fade">
+        <div class="eyebrow">Step 1 of 3</div><h1 class="page-title">We already know most of this.</h1>
+        <div class="lede">Instead of starting with a blank application, Government Navigator starts with information Harbor Market already has and asks only what is missing.</div>
+        <div class="card">
+          <div class="sectionhead"><div><div class="eyebrow">Provided by Harbor Market</div><h2>Confirm your starting information</h2></div><div class="progressbox"><div class="progressmeta"><span>Profile complete</span><span>72%</span></div><div class="progress"><span style="width:72%"></span></div></div></div>
+          <div class="grid2" id="prefillGrid"></div>
+          <div class="notice privacy" style="margin-top:16px"><div class="shield">✓</div><div><b>Your case is private.</b> Harbor Market can provide permitted payroll and benefits information, but it cannot see which individual government benefits you may qualify for, your household answers, applications, documents, or outcomes. Harbor Market receives aggregate impact reporting only.</div></div>
+          <div class="actions"><button class="btn primary big" onclick="startIntake()">Looks right — continue</button><button class="btn outline" onclick="toast('Demo: edit controls would open here')">Edit something</button></div>
+        </div>
+      </section>
+
+      <section id="intakeScreen" class="hidden fade">
+        <div class="sectionhead"><div><div class="eyebrow">Step 2 of 3 · Adaptive intake</div><h2>Six things Harbor Market doesn't know.</h2></div><div class="progressbox"><div class="progressmeta"><span id="qProgressLabel">Question 1 of 6</span><span id="qPct">72%</span></div><div class="progress"><span id="qProgress" style="width:72%"></span></div></div></div>
+        <div class="split">
+          <div class="card question-card" id="questionPanel"></div>
+          <div>
+            <div class="live-estimate"><div class="label">Updated potential value</div><div class="num" id="liveEstimate">$8,000–$10,000</div><div class="delta" id="estimateDelta">Updates as we learn more</div><div class="small" style="margin-top:8px">Screening estimate only. Official eligibility and final amounts come from the relevant programs and agencies.</div></div>
+            <div class="card" style="margin-top:12px"><div class="label">Shared case</div><div class="metric" id="completionMetric">72%</div><div class="small">Every answer is saved to the same household record.</div><div id="savedFacts" class="tiny" style="margin-top:12px"></div></div>
+          </div>
+        </div>
+        <div id="channelSwitch" class="card hidden">
+          <div class="sectionhead"><div><div class="eyebrow">Your progress is saved</div><h2>Want to finish another way?</h2></div></div>
+          <div class="small">Continue online, switch to secure text, use the automated phone navigator, or bring in a human. You will not start over.</div>
+          <div class="channelbar">
+            <button class="channel" onclick="resumeOnline()"><div class="icon">⌨</div><b>Continue online</b><span>Keep answering here.</span></button>
+            <button class="channel" onclick="openText()"><div class="icon">✉</div><b>Text me</b><span>Continue by secure message.</span></button>
+            <button class="channel" onclick="openVoice()"><div class="icon">☎</div><b>AI phone</b><span>Answer naturally by voice.</span></button>
+            <button class="channel" onclick="openNavigator('switch')"><div class="icon">◎</div><b>Live navigator</b><span>A person sees the same case.</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section id="textScreen" class="hidden fade">
+        <div class="eyebrow">Same case · Secure text</div><h1 class="page-title">Continue exactly where you left off.</h1><div class="lede">The text conversation writes to the same household record as the online intake.</div>
+        <div class="phone-shell">
+          <div class="phone-top"><b>Government Navigator</b><span>Secure benefits conversation</span></div>
+          <div class="messages" id="textMessages"></div>
+          <div class="typing" id="typingText">Your case is 84% complete.</div>
+          <div class="sms-actions"><input id="smsInput" value="$850" aria-label="Text response"><button onclick="sendSms()">↑</button></div>
+        </div>
+        <div class="actions" style="justify-content:center"><button class="btn primary" onclick="sendSms()">Send answer</button><button class="btn outline" onclick="returnFromChannel()">Back to online</button></div>
+      </section>
+
+      <section id="voiceScreen" class="hidden fade">
+        <div class="eyebrow">Same case · Automated phone</div><h1 class="page-title">Talk naturally. We structure the answer.</h1><div class="lede">The automated navigator sees the answers already provided and asks only what is still missing.</div>
+        <div class="card">
+          <div class="voice"><div class="label" style="color:#9fb9cd">Government Navigator · connected</div><div class="wave"><i></i><i></i><i></i><i></i><i></i></div><div class="voicequote" id="voiceQuote">“Maria, I already have your Harbor Market income information and the answers you gave online. One remaining question: about how much do you pay for child care each month?”</div><div class="voicehint">Demo transcript — no live calling is connected.</div></div>
+          <div class="actions"><button class="btn primary" onclick="voiceAnswer()">Simulate: “About $850 a month”</button><button class="btn outline" onclick="returnFromChannel()">Back to online</button></div>
+        </div>
+      </section>
+
+      <section id="navigatorScreen" class="hidden fade">
+        <div class="eyebrow">Live human handoff</div><h1 class="page-title">The navigator starts at the hard part.</h1><div class="lede">No re-intake. The human sees the case, completion percentage, likely matches, missing information, and the reason the case was escalated.</div>
+        <div class="navigator">
+          <div class="card navcase"><div class="eyebrow">Maria's case</div><h3>Household record</h3><div class="case-row"><span>Completion</span><b id="navCompletion">84%</b></div><div class="case-row"><span>Potential value</span><b id="navEstimate">$10,400–$12,700</b></div><div class="case-row"><span>Likely matches</span><b>Child care · EITC · CTC</b></div><div class="case-row"><span>Known income</span><b>Payroll verified</b></div><div class="case-row"><span>Known child care</span><b id="navChildcare">Not answered yet</b></div></div>
+          <div class="card navcase"><div class="eyebrow">Reason for escalation</div><h3>Household composition / shared custody</h3><div class="escalate"><div class="small">Maria told Government Navigator:</div><div class="quote">“It's complicated. Their dad has them some weekends, but they're on my taxes.”</div><div class="small">Household definitions can vary by program. The navigator receives the context instead of asking Maria to restart.</div></div><div class="actions"><button class="btn green" onclick="resolveEscalation()">Navigator resolves & continues</button></div></div>
+        </div>
+      </section>
+
+      <section id="resultsScreen" class="hidden fade">
+        <div class="eyebrow">Step 3 of 3 · Review</div><h1 class="page-title">We found 6 programs worth<br><span id="finalEstimate" style="color:var(--gn)">$10,860–$13,240 a year.</span></h1>
+        <div class="lede">Choose what you want Government Navigator to prepare. One approval reuses your household information and documents across every selected pathway.</div>
+        <div class="results-grid" id="resultsGrid"></div>
+        <div class="card">
+          <div class="notice"><b>What “apply” means:</b> Government Navigator can prepare, route, and track each program, but some agencies still require your signature, authentication, interview, tax filing, or final submission on an official government site. We show that honestly rather than claiming something was submitted when it was only prepared.</div>
+          <div class="actions"><button class="btn green big" onclick="approveApply()">Approve & apply for 6 programs</button><button class="btn outline" onclick="showScreen('intakeScreen')">Review answers</button></div>
+        </div>
+      </section>
+
+      <section id="applicationsScreen" class="hidden fade">
+        <div class="eyebrow">Application center</div><h1 class="page-title">You're done for now.</h1><div class="lede">Government Navigator has turned one household record into the next action for every selected program.</div>
+        <div class="outcome-banner"><div class="eyebrow">Today's progress</div><h2>Six programs moved forward from one approval.</h2><div class="outcomes"><div class="outcome"><strong>3</strong><span class="small">prepared / routed</span></div><div class="outcome"><strong>1</strong><span class="small">needs signature</span></div><div class="outcome"><strong>1</strong><span class="small">agency interview</span></div></div><div class="tiny" style="margin-top:10px">The sixth pathway is queued for tax filing. Status labels are illustrative and do not represent live submissions.</div></div>
+        <div class="card" id="appRows"></div>
+        <div class="card"><div class="sectionhead"><div><div class="eyebrow">Stay with the case</div><h2>Track, cure, renew, rescreen.</h2></div></div><div class="grid3"><div><div class="label">Next deadline</div><div class="metric">Sep 24</div><div class="small">Child-care signature</div></div><div><div class="label">Agency interview</div><div class="metric">1</div><div class="small">SNAP scheduling step</div></div><div><div class="label">Renewals</div><div class="metric">Auto-track</div><div class="small">We'll remind Maria before deadlines</div></div></div></div>
+        <div class="actions"><button class="btn primary" onclick="setView('employer')">Now show me the employer view →</button><button class="btn outline" onclick="resetDemo()">Restart demo</button></div>
+      </section>
+    </section>
+
+    <section id="employerView" class="hidden fade">
+      <div class="eyebrow">Harbor Market · Benefits administration</div><h1 class="page-title">Outside resources captured<br>for employees.</h1><div class="lede">Government Navigator is designed to measure household economic value while preserving a hard privacy boundary around individual employee cases.</div>
+      <div class="card employer-hero"><div class="split"><div><div class="eyebrow">Illustrative annual impact</div><div class="roi">$4.8M</div><div class="lede">government benefits and credits secured for Harbor Market households</div><div class="grid3" style="margin-top:20px"><div><div class="label" style="color:#a7c4cc">Employees screened</div><div class="metric">3,112</div></div><div><div class="label" style="color:#a7c4cc">Applications initiated</div><div class="metric">1,426</div></div><div><div class="label" style="color:#a7c4cc">Avg. household value</div><div class="metric">$3,370</div></div></div></div><div class="privacy-lock"><b>Individual cases stay private.</b><span>Harbor Market cannot see which employees receive SNAP, Medicaid, tax credits, child-care subsidies, or any other individual benefit. It cannot see household composition, documents, application answers, or case outcomes. This dashboard is aggregate only.</span></div></div></div>
+      <div class="grid3"><div class="card"><div class="label">Annual GN cost</div><div class="metric">$599K</div><div class="small">Illustrative $4 PEPM</div></div><div class="card"><div class="label">Employee value delivered</div><div class="metric">$4.8M</div><div class="small">Illustrative secured value</div></div><div class="card"><div class="label">Value / employer $</div><div class="metric">8.0×</div><div class="small">Household value ÷ platform spend</div></div></div>
+      <div class="card"><div class="sectionhead"><div><div class="eyebrow">Aggregate impact</div><h2>Where value is coming from</h2></div></div><div class="impactrow"><span>Tax credits</span><div class="impactbar"><span style="width:82%"></span></div><b>$1.7M</b></div><div class="impactrow"><span>Child care</span><div class="impactbar"><span style="width:68%"></span></div><b>$1.4M</b></div><div class="impactrow"><span>Food assistance</span><div class="impactbar"><span style="width:40%"></span></div><b>$0.8M</b></div><div class="impactrow"><span>Health coverage</span><div class="impactbar"><span style="width:31%"></span></div><b>$0.6M</b></div><div class="impactrow"><span>Energy + other</span><div class="impactbar"><span style="width:16%"></span></div><b>$0.3M</b></div></div>
+      <div class="card"><div class="grid3"><div><div class="label">Employees who started</div><div class="metric">24.9%</div><div class="small">of covered workforce</div></div><div><div class="label">Cases completed</div><div class="metric">78%</div><div class="small">across web, text, phone + human</div></div><div><div class="label">Median employee time</div><div class="metric">6 min</div><div class="small">illustrative demo metric</div></div></div></div>
+      <div class="actions"><button class="btn primary" onclick="setView('employee');showScreen('welcomeScreen')">Replay employee experience</button></div>
+    </section>
+
+    <div class="demo-note">Government Navigator interactive concept prototype. Harbor Market, Maria Santos, program results, benefit values, employer metrics, application states, calls, texts, and agency actions are fictional and illustrative. This prototype is not an eligibility determination, government service, legal advice, tax advice, or live integration.</div>
+  </main>
+</div>
+
+<div id="applyOverlay" class="overlay"><div class="modal"><div class="eyebrow">Government Navigator</div><h2>Creating Maria's application packet…</h2><div class="small">Reusing information once across each selected pathway.</div><div class="processing" id="processingList"></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const state={
+  q:0,answers:{},lastScreen:'intakeScreen',channelReturnQ:3,
+  estimate:{low:8000,high:10000},completion:72,
+  textSent:false,voiceDone:false,escalationResolved:false
+};
+const prefill=[
+  ['Name','Maria Santos'],['Home','Honolulu, HI 96814'],['Hourly pay','$21.50'],['Average hours','32 / week'],
+  ['2026 YTD earnings','$24,860'],['Health coverage','Declined employer medical'],['Dependents on benefits record','2'],['Employment status','Active']
+];
+const questions=[
+  {key:'otherIncome',prompt:'Does anyone else in your household earn income?',sub:'We already have your Harbor Market pay. This helps us estimate household income for programs that use everyone’s earnings.',type:'choice',choices:['No','Yes — about $1,000/month','Yes — about $2,000/month'],default:'No',effect:{low:0,high:0,delta:'Income picture clarified · estimate range confirmed'}},
+  {key:'childAges',prompt:'How old are the children who live with you?',sub:'Age can change child-care, health coverage, school meal, and tax-credit pathways.',type:'text',placeholder:'Example: 4 and 8',default:'4 and 8',effect:{low:500,high:600,delta:'Two child-related pathways strengthened'}},
+  {key:'custody',prompt:'Do both children live with you most of the time?',sub:'Household definitions can differ across programs. We can route anything complicated to a human navigator.',type:'choice',choices:['Yes','Mostly — shared custody','No'],default:'Mostly — shared custody',effect:{low:0,high:0,delta:'Shared custody flagged for review'}},
+  {key:'childcare',prompt:'About how much do you pay for child care each month?',sub:'This may affect child-care assistance and some tax calculations.',type:'money',placeholder:'850',default:'850',effect:{low:1800,high:1800,delta:'Child-care assistance potential increased'}},
+  {key:'rent',prompt:'What is your monthly rent?',sub:'Housing costs can affect deductions and eligibility calculations for some programs.',type:'money',placeholder:'2050',default:'2050',effect:{low:350,high:450,delta:'Housing deductions added to screening'}},
+  {key:'utilities',prompt:'Do you pay your home electricity or gas bill?',sub:'This helps us screen energy assistance and can matter for other program deductions.',type:'choice',choices:['Yes','No','Included in rent'],default:'Yes',effect:{low:210,high:390,delta:'Energy assistance pathway added'}}
+];
+const programs=[
+  {name:'Child Care Connection Hawaii',status:'Likely match',kind:'good',amount:'$3,600–$5,200/yr',detail:'Child-care assistance · household and care costs reviewed'},
+  {name:'Earned Income Tax Credit',status:'Likely match',kind:'good',amount:'~$2,400',detail:'Tax credit · estimated from earnings and household'},
+  {name:'Child Tax Credit',status:'Likely match',kind:'good',amount:'~$2,000',detail:'Tax credit · dependent information reviewed'},
+  {name:'SNAP food assistance',status:'Possible match',kind:'possible',amount:'$1,200–$2,400/yr',detail:'Food assistance · final deductions and agency rules apply'},
+  {name:'LIHEAP energy assistance',status:'Possible match',kind:'possible',amount:'$500–$1,000',detail:'Energy assistance · utility responsibility confirmed'},
+  {name:'Medicaid / CHIP',status:'Reviewing',kind:'info',amount:'Coverage value varies',detail:'Health coverage · household rules require final review'}
+];
+const applications=[
+  ['Child Care Connection Hawaii','$3,600–$5,200/yr','Prepared · signature required','Signature'],
+  ['Earned Income Tax Credit','~$2,400','Tax filing pathway prepared','Tax filing'],
+  ['Child Tax Credit','~$2,000','Tax filing pathway prepared','Tax filing'],
+  ['SNAP food assistance','$1,200–$2,400/yr','Application routed · agency interview next','Interview'],
+  ['LIHEAP','$500–$1,000','Packet prepared · utility proof attached','Prepared'],
+  ['Medicaid / CHIP','Coverage varies','Eligibility packet prepared for official review','Prepared']
+];
+function money(n){return '$'+Math.round(n).toLocaleString()}
+function estimateText(){return money(state.estimate.low)+'–'+money(state.estimate.high)}
+function init(){
+  document.getElementById('prefillGrid').innerHTML=prefill.map(x=>`<div class="prefill"><div class="source">From Harbor Market</div><b>${x[0]}</b><div class="v">${x[1]}</div></div>`).join('');
+  renderQuestion();renderSaved();renderResults();renderApps();
+}
+function showScreen(id){['welcomeScreen','prefillScreen','intakeScreen','textScreen','voiceScreen','navigatorScreen','resultsScreen','applicationsScreen'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.getElementById(id).classList.remove('fade');void document.getElementById(id).offsetWidth;document.getElementById(id).classList.add('fade');window.scrollTo({top:0,behavior:'smooth'});state.lastScreen=id}
+function setView(v){const emp=v==='employer';document.getElementById('employeeView').classList.toggle('hidden',emp);document.getElementById('employerView').classList.toggle('hidden',!emp);document.getElementById('employeeToggle').classList.toggle('active',!emp);document.getElementById('employerToggle').classList.toggle('active',emp);window.scrollTo({top:0,behavior:'smooth'})}
+function startIntake(){state.q=0;showScreen('intakeScreen');renderQuestion()}
+function renderQuestion(){
+  const p=document.getElementById('questionPanel');
+  if(state.q>=questions.length){finishIntake();return}
+  const q=questions[state.q];
+  document.getElementById('qProgressLabel').textContent=`Question ${state.q+1} of ${questions.length}`;
+  state.completion=72+Math.round((state.q/questions.length)*26);
+  document.getElementById('qPct').textContent=state.completion+'%';document.getElementById('qProgress').style.width=state.completion+'%';
+  document.getElementById('completionMetric').textContent=state.completion+'%';
+  let control='';
+  if(q.type==='choice') control=`<div class="choicegrid">${q.choices.map(c=>`<button class="choice ${state.answers[q.key]===c?'selected':''}" onclick="answerChoice('${q.key}',${JSON.stringify(c).replace(/"/g,'&quot;')})">${c}</button>`).join('')}</div>`;
+  else control=`<div class="inputrow"><input id="qInput" class="biginput" ${q.type==='money'?'inputmode="numeric"':''} value="${state.answers[q.key]||q.default||''}" placeholder="${q.placeholder||''}"><button class="btn primary" onclick="answerInput()">Continue →</button></div>`;
+  p.innerHTML=`<div class="label">Question ${state.q+1}</div><div class="qprompt">${q.prompt}</div><div class="qsub">${q.sub}</div>${control}<div class="actions" style="margin-top:22px"><button class="btn light" onclick="prevQuestion()" ${state.q===0?'disabled':''}>← Back</button>${q.type==='choice'?'<span class="tiny" style="align-self:center">Choose one to continue</span>':''}</div>`;
+  renderSaved();updateEstimateUI();
+  document.getElementById('channelSwitch').classList.toggle('hidden',state.q<3 || state.q>=questions.length);
+}
+function applyEffect(q){if(state.answers['__effect_'+q.key])return;state.estimate.low+=q.effect.low;state.estimate.high+=q.effect.high;state.answers['__effect_'+q.key]=true;document.getElementById('estimateDelta').textContent=(q.effect.low||q.effect.high)?('+'+money(q.effect.low)+' to +'+money(q.effect.high)+' · '+q.effect.delta):q.effect.delta;updateEstimateUI()}
+function answerChoice(key,val){const q=questions[state.q];state.answers[key]=val;applyEffect(q);renderSaved();setTimeout(()=>{state.q++;if(key==='custody' && val.indexOf('shared custody')>-1)renderEscalationPrompt();else renderQuestion()},220)}
+function renderEscalationPrompt(){const p=document.getElementById('questionPanel');state.completion=84;document.getElementById('qProgressLabel').textContent='Household detail needs review';document.getElementById('qPct').textContent='84%';document.getElementById('qProgress').style.width='84%';document.getElementById('completionMetric').textContent='84%';p.innerHTML=`<div class="label">Smart escalation</div><div class="qprompt">This one is worth a human look.</div><div class="qsub">You told us: <b>“Mostly — shared custody.”</b> Household definitions can work differently across programs. A navigator can review this issue without making you repeat anything you already entered.</div><div class="escalate"><h3>Your case will arrive with context</h3><div class="small">Income: payroll verified · Children: ${state.answers.childAges||'entered'} · Shared custody: flagged · Potential matches: child care, EITC, CTC, SNAP</div></div><div class="actions"><button class="btn green big" onclick="openNavigator('custody')">Talk to a navigator →</button><button class="btn outline" onclick="renderQuestion()">Continue myself</button></div>`;document.getElementById('channelSwitch').classList.remove('hidden');renderSaved();updateEstimateUI()}
+function answerInput(){const q=questions[state.q];const v=document.getElementById('qInput').value.trim()||q.default;state.answers[q.key]=v;applyEffect(q);state.q++;renderQuestion()}
+function prevQuestion(){if(state.q>0){state.q--;renderQuestion()}}
+function renderSaved(){const facts=questions.filter(q=>state.answers[q.key]).map(q=>`${q.prompt.split('?')[0]}: <b>${state.answers[q.key]}</b>`);document.getElementById('savedFacts').innerHTML=facts.length?facts.slice(-3).join('<br>'):'No additional household answers yet.'}
+function updateEstimateUI(){const t=estimateText();document.getElementById('liveEstimate').textContent=t;document.getElementById('navEstimate').textContent=t;document.getElementById('finalEstimate').textContent=t+' a year.'}
+function resumeOnline(){showScreen('intakeScreen');renderQuestion()}
+function openText(){state.channelReturnQ=state.q;showScreen('textScreen');renderText()}
+function renderText(){const known=state.answers.childAges?`I have the ages you entered online (${state.answers.childAges}) and your Harbor Market income information.`:'I have your Harbor Market income information and the answers you already gave online.';document.getElementById('textMessages').innerHTML=`<div class="bubble">Hi Maria — ${known}</div><div class="bubble">One thing I still need: about how much do you pay for child care each month?</div>${state.textSent?'<div class="bubble me">$850</div><div class="bubble">Got it. I added $850/month to your household record. That strengthened the child-care assistance pathway. Your online case is updated too.</div>':''}`;document.getElementById('typingText').textContent=state.textSent?'Saved to the same case.':'Your case is 84% complete.'}
+function sendSms(){if(!state.textSent){state.textSent=true;state.answers.childcare='850';const q=questions.find(x=>x.key==='childcare');applyEffect(q);if(state.q<=3)state.q=4;state.completion=89;renderText();document.getElementById('navChildcare').textContent='$850/mo';toast('Text answer saved to the same household record')}else returnFromChannel()}
+function openVoice(){state.channelReturnQ=state.q;showScreen('voiceScreen')}
+function voiceAnswer(){if(!state.voiceDone){state.voiceDone=true;state.answers.childcare='850';const q=questions.find(x=>x.key==='childcare');applyEffect(q);if(state.q<=3)state.q=4;document.getElementById('voiceQuote').textContent='“Got it — $850 per month. I saved that to your household record. You can continue online without repeating it.”';toast('Voice answer structured and saved');setTimeout(returnFromChannel,700)}}
+function returnFromChannel(){showScreen('intakeScreen');renderQuestion()}
+function openNavigator(reason){state.channelReturnQ=state.q;document.getElementById('navCompletion').textContent=Math.max(state.completion,84)+'%';showScreen('navigatorScreen')}
+function resolveEscalation(){state.escalationResolved=true;state.answers.custody='Mostly — shared custody (navigator reviewed)';if(!state.answers['__effect_custody'])applyEffect(questions.find(x=>x.key==='custody'));toast('Navigator resolution saved to the same case');setTimeout(()=>{showScreen('intakeScreen');renderQuestion()},650)}
+function finishIntake(){state.completion=100;document.getElementById('completionMetric').textContent='100%';state.estimate.low=Math.max(state.estimate.low,10860);state.estimate.high=Math.max(state.estimate.high,13240);updateEstimateUI();renderResults();showScreen('resultsScreen')}
+function renderResults(){document.getElementById('resultsGrid').innerHTML=programs.map((p,i)=>`<div class="program"><span class="status ${p.kind}">${p.status}</span><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="amount">${p.amount}</div><label class="checkline"><input type="checkbox" checked> Include this pathway</label></div>`).join('')}
+function approveApply(){const steps=['Reusing Harbor Market income information','Adding household and child-care answers','Preparing child-care assistance packet','Preparing tax-credit pathways','Preparing SNAP and LIHEAP materials','Checking Medicaid / CHIP pathway','Creating tracking and renewal plan'];document.getElementById('processingList').innerHTML=steps.map((s,i)=>`<div class="proc" id="proc${i}"><div class="proc-dot">${i+1}</div><div>${s}</div></div>`).join('');document.getElementById('applyOverlay').classList.add('show');steps.forEach((_,i)=>setTimeout(()=>{const e=document.getElementById('proc'+i);e.classList.add('done');e.querySelector('.proc-dot').textContent='✓'},350+i*280));setTimeout(()=>{document.getElementById('applyOverlay').classList.remove('show');renderApps();showScreen('applicationsScreen')},350+steps.length*280+500)}
+function renderApps(){document.getElementById('appRows').innerHTML=applications.map((a,i)=>`<div class="app-row"><div><h3>${a[0]}</h3><div class="small">Estimated value: <b>${a[1]}</b></div></div><div><span class="status ${i<3?'good':i===3?'possible':'info'}">${a[3]}</span><div class="state" style="margin-top:5px">${a[2]}</div></div><button class="btn outline" onclick="toast('Demo next step opened')">View</button></div>`).join('')}
+function resetDemo(){state.q=0;state.answers={};state.estimate={low:8000,high:10000};state.completion=72;state.textSent=false;state.voiceDone=false;state.escalationResolved=false;document.getElementById('estimateDelta').textContent='Updates as we learn more';updateEstimateUI();renderQuestion();setView('employee');showScreen('welcomeScreen')}
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.classList.remove('show'),1800)}
+init();
+</script>
+</body>
+</html>
